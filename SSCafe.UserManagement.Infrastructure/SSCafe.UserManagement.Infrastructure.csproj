@@ -18,6 +18,8 @@
 
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="11.0.0" />
 
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.23.0" />
 	</ItemGroup>
 
@@ -28,10 +30,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\SSCafe.UserManagement.Application\SSCafe.UserManagement.Application.csproj" />
 		<ProjectReference Include="..\SSCafe.UserManagement.Domain\SSCafe.UserManagement.Domain.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Migratins\" />
 	</ItemGroup>
 
 </Project>

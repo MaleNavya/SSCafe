@@ -10,30 +10,12 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Controllers and Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("SqlCon")));
 
-// Database connection
-var connectionString =
-    builder.Configuration.GetConnectionString("DefaultConnection");
-
-if (string.IsNullOrWhiteSpace(connectionString))
-{
-    throw new InvalidOperationException(
-        "DefaultConnection is missing from appsettings.json");
-}
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseSqlServer(
-        connectionString,
-        sqlOptions =>
-        {
-            sqlOptions.MigrationsAssembly(
-                "SSCafe.UserManagement.Infrastructure");
-        });
-});
 
 // Register repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -46,7 +28,7 @@ builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<UserRoleService>();
 builder.Services.AddScoped<AuthService>();
 
-// CORS
+// CORS Configuration
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactPolicy", policy =>
@@ -62,7 +44,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-// JWT Authentication
+// JWT Authentication Configuration
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 
 var jwtKey = jwtSettings["Key"];
@@ -106,17 +88,20 @@ builder.Services.AddAuthentication(options =>
         };
 });
 
+// Authorization
 builder.Services.AddAuthorization();
 
 // Build application
 var app = builder.Build();
 
+// Development Configuration
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// Middleware
 app.UseCors("ReactPolicy");
 
 app.UseHttpsRedirection();
@@ -124,6 +109,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Map Controllers
 app.MapControllers();
 
+// Run Application
 app.Run();
