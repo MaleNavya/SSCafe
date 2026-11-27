@@ -8,19 +8,20 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.13" />
 
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
-
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
-
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.0">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.13">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 
 		<PackageReference Include="Microsoft.OpenApi" Version="2.12.2" />
-
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="10.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SSCafe.MenuManagement.Application\SSCafe.MenuManagement.Application.csproj" />
+		<ProjectReference Include="..\SSCafe.MenuManagement.Infrastructure\SSCafe.MenuManagement.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "UpstreamPathTemplate": "/gateway/{everything}",
+      "UpstreamPathTemplate": "/gateway/user/{everything}",
       "UpstreamHttpMethod": [
         "GET",
         "POST",
@@ -17,6 +17,24 @@
         }
       ],
       "SwaggerKey": "User"
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/menu/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ],
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "SwaggerKey": "Menu"
     }
   ],
   "SwaggerEndPoints": [
@@ -27,6 +45,16 @@
           "Name": "SSCafe User Management API",
           "Version": "v1",
           "Url": "http://localhost:5001/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "Menu",
+      "Config": [
+        {
+          "Name": "SSCafe Menu Management API",
+          "Version": "v1",
+          "Url": "http://localhost:5002/swagger/v1/swagger.json"
         }
       ]
     }

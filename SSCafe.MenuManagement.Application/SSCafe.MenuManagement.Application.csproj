@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SSCafe.MenuManagement.Domain\SSCafe.MenuManagement.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

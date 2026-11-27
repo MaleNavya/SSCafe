@@ -14,12 +14,15 @@ builder.Configuration.AddJsonFile(
     reloadOnChange: true
 );
 
-// Register Controllers
+// Register controllers
 builder.Services.AddControllers();
 
-// Swagger configuration
+// Swagger configuration for downstream APIs
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerForOcelot(builder.Configuration);
+
+builder.Services.AddSwaggerForOcelot(
+    builder.Configuration
+);
 
 // Configure HTTP Client
 builder.Services.ConfigureHttpClientDefaults(http =>
@@ -27,6 +30,7 @@ builder.Services.ConfigureHttpClientDefaults(http =>
     http.ConfigureHttpClient(client =>
     {
         client.DefaultRequestVersion = HttpVersion.Version11;
+
         client.DefaultVersionPolicy =
             HttpVersionPolicy.RequestVersionExact;
     });
@@ -44,7 +48,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Register Ocelot
+// Register Ocelot API Gateway
 builder.Services.AddOcelot(builder.Configuration);
 
 // Build application
@@ -53,10 +57,12 @@ var app = builder.Build();
 // Enable CORS
 app.UseCors("ReactClient");
 
-// Redirect root to Swagger
-app.MapGet("/", () => Results.Redirect("/swagger"));
+// Root endpoint
+app.MapGet("/", () =>
+    Results.Redirect("/swagger")
+);
 
-// Swagger UI
+// Swagger UI for User and Menu Management
 if (app.Environment.IsDevelopment())
 {
     app.UseSwaggerForOcelotUI(options =>
